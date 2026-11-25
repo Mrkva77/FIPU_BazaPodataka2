@@ -1,0 +1,79 @@
+------OSNOVE SORTIRANJE------
+Ispiši prezime i primanja svih nastavnika s fakulteta Fizika.
+
+SELECT prezime, primanja FROM nastavnik
+WHERE fakultet = "Fizika";
+----------------------------------------------------------------------
+
+Isti upit kao u A1, ali sortiraj rezultat po primanjima uzlazno. Kod jednakih primanja sortiraj po prezimenu.
+
+SELECT prezime, primanja FROM nastavnik
+WHERE fakultet = "Fizika"
+ORDER BY primanja, prezime;
+
+----------------------------------------------------------------------
+Ispiši prezimena svih nastavnika i fakultete na kojima rade, tako da su fakulteti poredani silazno, a prezimena uzlazno.
+
+SELECT prezime, fakultet FROM nastavnik
+ORDER BY fakultet DESC, prezime;
+----------------------------------------------------------------------
+
+Ispiši ime, prezime i grad svih docenata koji žive u Zagrebu ili Rijeci.
+
+SELECT ime, prezime, grad FROM nastavnik
+WHERE zvanje = "docent"
+  AND (grad = "Zagreb" or grad = "Rijeka")
+----------------------------------------------------------------------
+
+------FUNKCIJE AGREGACIJE------
+Izračunaj prosječna primanja nastavnika na Medicini.
+
+SELECT AVG(primanja) FROM nastavnik
+WHERE fakultet = "Medicina";
+----------------------------------------------------------------------
+Na koliko različitih fakulteta rade nastavnici? Rezultat je jedan broj.
+
+SELECT count(DISTINCT fakultet) FROM nastavnik;
+----------------------------------------------------------------------
+Za svaki fakultet ispiši naziv fakulteta i prosječna primanja nastavnika.
+
+SELECT fakultet, avg(primanja) AS p_primanja
+FROM nastavnik
+GROUP BY fakultet;
+----------------------------------------------------------------------
+Za svaki par (fakultet, zvanje) ispiši koliko nastavnika ima to zvanje na tom fakultetu.
+
+SELECT fakultet, zvanje, count(*) AS broj
+FROM nastavnik
+GROUP BY fakultet, zvanje;
+----------------------------------------------------------------------
+
+------WHERE i HAVING------
+Ispiši fakultet, ime i broj pojavljivanja za imena koja se na istom fakultetu pojavljuju više od jednom.
+
+SELECT fakultet, ime, COUNT(*) FROM nastavnik
+  GROUP BY fakultet, ime
+  HAVING COUNT(*) > 1;
+---------------------------------------------------------------------
+Ispiši fakultete i prosječna primanja, ali samo za fakultete na kojima su prosječna primanja veća od 11000
+
+SELECT fakultet, avg(primanja) AS p_primanja
+FROM nastavnik
+GROUP BY fakultet
+HAVING p_primanja > 11000;
+----------------------------------------------------------------------
+Za svaki fakultet ispiši koliko nastavnika ima primanja veća od 10000, ali prikaži samo fakultete na kojima je takvih nastavnika barem troje.
+
+SELECT fakultet, COUNT(*)
+  FROM nastavnik
+  WHERE primanja > 10000
+  GROUP BY fakultet
+  HAVING COUNT(*) >= 3;
+-----------------------------------------------------------------------
+
+------PODUPITI------
+Ispiši prezime i primanja nastavnika s najvišim primanjima na sveučilištu. Upit sa slajda 18 ovdje ne pomaže.
+
+
+
+
